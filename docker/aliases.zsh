@@ -1,0 +1,5 @@
+alias dcu='docker-compose up -d'
+alias dcd='docker-compose down'
+alias dcv='docker volume ls -qf dangling=true | xargs -r docker volume rm'
+alias dcr='docker-compose pull && docker-compose up -d && docker image prune -f'
+alias dive='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive'
