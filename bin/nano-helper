@@ -1,0 +1,28 @@
+#!/bin/sh
+# Checks file permissions before opening nano.
+ 
+sudo=
+editor=nano
+
+if test -e "$1" && test ! -w "$1"; then
+    if test -t 0 && test -t 2; then
+        read -p "$1 is not writable. Edit with sudo? [y/n] " yn
+        case $yn in
+        y|Y)
+            sudo=true
+            ;;
+        n|N)
+            sudo=
+            ;;
+        *)
+            printf "\nInvalid choice. Please try again later.\n" 1>&2
+            exit 1
+            ;;
+        esac
+    else
+        printf "%s is not writable. Fix the permissions or run \"cat\" instead." "$1" 1>&2
+        exit 1
+    fi
+fi
+
+${sudo:+sudo} "$editor" "$1"
